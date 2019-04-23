@@ -1,14 +1,14 @@
 package com.ngi.test.test;
 
-import com.ngi.test.application.queue.CustomPriorityQueue;
+import com.ngi.test.application.queue.SynchronizedPriorityQueue;
 import com.ngi.test.application.queue.Element;
 import org.junit.Test;
 
-public class CustomPriorityQueueTest {
+public class SynchronizedPriorityQueueTest {
 
     @Test
     public void testAddPriorityQueue() {
-        CustomPriorityQueue<String> priorityQueue = new CustomPriorityQueue<>();
+        SynchronizedPriorityQueue<String> priorityQueue = new SynchronizedPriorityQueue<>();
         priorityQueue.add("broken leg", 10);
         priorityQueue.add("paper cut", 5);
         priorityQueue.add("gunshot wound", 20);

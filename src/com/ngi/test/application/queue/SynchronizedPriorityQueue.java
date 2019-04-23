@@ -1,10 +1,10 @@
 package com.ngi.test.application.queue;
 
-public class CustomPriorityQueue<E extends Comparable<? super E>> {
+public class SynchronizedPriorityQueue<E extends Comparable<? super E>> {
     private Element<E>[] queue;
     private int index;
 
-    public CustomPriorityQueue() {
+    public SynchronizedPriorityQueue() {
         queue = new Element[10];
         index = 0;
     }
@@ -22,7 +22,7 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> {
      * @param label
      * @param priority
      */
-    public void add(E label, int priority) {
+    public synchronized void add(E label, int priority) {
         Element<E> element = new Element<>(label, priority);
         if (index == queue.length) {
             resize();
@@ -36,7 +36,7 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> {
      * Remove first element
      * @return the removed element
      */
-    public Element<E> remove() {
+    public synchronized Element<E> remove() {
         if (isEmpty()) {
             return null;
         }
@@ -55,7 +55,7 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> {
         return result;
     }
 
-    private void resize() {
+    private synchronized void resize() {
         Element<E>[] newQueue = new Element[index + 1];
         System.arraycopy(queue, 0, newQueue, 0, index);
         queue = newQueue;
