@@ -11,7 +11,7 @@ public class Main {
         priorityQueue.add(3, 0);
         priorityQueue.add(4, 20);
 
-        while (priorityQueue.iterator().hasNext()) {
+        while(!priorityQueue.isEmpty()) {
             System.out.println(priorityQueue.remove());
         }
     }

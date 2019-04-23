@@ -1,5 +1,9 @@
 package com.ngi.test.application.queue;
 
+/**
+ * Class that holds the element and it's priority
+ * @param <E> the type of the element
+ */
 public class Element<E extends Comparable<? super E>> {
     private E label;
     private int priority;

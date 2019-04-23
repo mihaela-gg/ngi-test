@@ -1,12 +1,12 @@
 package com.ngi.test.application.queue;
 
-import java.util.*;
-
-public class CustomPriorityQueue<E extends Comparable<? super E>> implements Iterable<Element<E>> {
-    private List<Element<E>> queue;
+public class CustomPriorityQueue<E extends Comparable<? super E>> {
+    private Element<E>[] queue;
+    private int index;
 
     public CustomPriorityQueue() {
-        this.queue = Collections.synchronizedList(new ArrayList<>());
+        queue = new Element[10];
+        index = 0;
     }
 
     /**
@@ -14,7 +14,7 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> implements Ite
      * @return true if the queue is empty
      */
     public boolean isEmpty() {
-        return this.queue.size() == 0;
+        return index == 0;
     }
 
     /**
@@ -24,7 +24,12 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> implements Ite
      */
     public void add(E label, int priority) {
         Element<E> element = new Element<>(label, priority);
-        this.queue.add(element);
+        if (index == queue.length) {
+            resize();
+        }
+
+        queue[index] = element;
+        index++;
     }
 
     /**
@@ -37,20 +42,22 @@ public class CustomPriorityQueue<E extends Comparable<? super E>> implements Ite
         }
 
         int deletedIndex = 0;
-        for (int i = 0; i < this.queue.size(); i++) {
-            if (this.queue.get(i).getPriority() > this.queue.get(deletedIndex).getPriority()) {
+        for (int i = 0; i < index; i++) {
+            if (queue[i].getPriority() > queue[deletedIndex].getPriority()) {
                 deletedIndex = i;
             }
         }
 
-        Element<E> result = this.queue.get(deletedIndex);
-        this.queue.remove(deletedIndex);
+        Element<E> result = queue[deletedIndex];
+        index--;
+        queue[deletedIndex] = queue[index];
 
         return result;
     }
 
-    @Override
-    public Iterator<Element<E>> iterator() {
-        return this.queue.iterator();
+    private void resize() {
+        Element<E>[] newQueue = new Element[index + 1];
+        System.arraycopy(queue, 0, newQueue, 0, index);
+        queue = newQueue;
     }
 }
